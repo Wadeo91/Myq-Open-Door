@@ -55,3 +55,5 @@ async def close_garage(request: LoginRequest):
 async def get_status(email: str, password: str):
     authenticate_user(email, password)
     return StatusResponse(garage_status=fake_db["user"]["garage_status"])
+fastapi
+uvicorn
