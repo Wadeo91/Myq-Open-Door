@@ -65,3 +65,13 @@ services:
     buildCommand: ""
     startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     envVars: []
+fastapi
+uvicorn
+services:
+  - type: web
+    name: myq-garage-backend
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    envVars: []
