@@ -14,8 +14,7 @@ import {
 import Voice from '@react-native-voice/voice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'https://myq-garage-app-tunnel-91dh3nao.devinapps.com';
-const PROXY_AUTH = 'Basic ' + btoa('user:34f5149b9a96cf61546bb41a18af35dd');
+const API_BASE_URL = 'https://user:34f5149b9a96cf61546bb41a18af35dd@myq-garage-app-tunnel-91dh3nao.devinapps.com';
 
 interface Credentials {
   email: string;
@@ -121,7 +120,6 @@ export default function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': PROXY_AUTH,
         },
         body: JSON.stringify({ email, password }),
       });
@@ -158,7 +156,6 @@ export default function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': PROXY_AUTH,
         },
         body: JSON.stringify(credentials),
       });
@@ -191,7 +188,6 @@ export default function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': PROXY_AUTH,
         },
         body: JSON.stringify(credentials),
       });
@@ -218,11 +214,7 @@ export default function App() {
         email: creds.email,
         password: creds.password,
       });
-      const response = await fetch(`${API_BASE_URL}/status?${params}`, {
-        headers: {
-          'Authorization': PROXY_AUTH,
-        },
-      });
+      const response = await fetch(`${API_BASE_URL}/status?${params}`);
       const data = await response.json();
 
       if (response.ok) {
