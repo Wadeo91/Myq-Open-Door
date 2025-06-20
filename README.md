@@ -1,77 +1,46 @@
-# Myq-Open-Door
-Open patio
+# MyQ Garage Door Control
 
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import Optional
-import asyncio
+A mobile app with voice commands and widget controls to open/close a MyQ garage door.
 
-app = FastAPI()
+## Features
 
-fake_db = {
-    "user": {
-        "email": "test@example.com",
-        "password": "supersecret",
-        "garage_status": "closed"
-    }
-}
+- **Voice Control**: Use Google Assistant integration to control garage door with voice commands
+- **Widget Interface**: Manual control buttons within the mobile app
+- **Authentication**: Secure login system
+- **Real-time Status**: View current garage door status (open/closed)
 
-class LoginRequest(BaseModel):
-    email: str
-    password: str
+## Backend API
 
-class CommandResponse(BaseModel):
-    status: str
-    message: str
+The FastAPI backend provides the following endpoints:
 
-class StatusResponse(BaseModel):
-    garage_status: str
+- `POST /login` - Authenticate user
+- `POST /open` - Open garage door
+- `POST /close` - Close garage door  
+- `GET /status` - Get current garage door status
 
-def authenticate_user(email: str, password: str):
-    if email != fake_db["user"]["email"] or password != fake_db["user"]["password"]:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    return True
+## Setup
 
-@app.post("/login", response_model=CommandResponse)
-async def login(request: LoginRequest):
-    authenticate_user(request.email, request.password)
-    return CommandResponse(status="success", message="Logged in successfully.")
+### Backend
+```bash
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-@app.post("/open", response_model=CommandResponse)
-async def open_garage(request: LoginRequest):
-    authenticate_user(request.email, request.password)
-    await asyncio.sleep(1)
-    fake_db["user"]["garage_status"] = "open"
-    return CommandResponse(status="success", message="Garage door opened.")
+### Mobile App
+```bash
+cd MyQGarageApp
+npm install
+npx react-native run-android  # or run-ios
+```
 
-@app.post("/close", response_model=CommandResponse)
-async def close_garage(request: LoginRequest):
-    authenticate_user(request.email, request.password)
-    await asyncio.sleep(1)
-    fake_db["user"]["garage_status"] = "closed"
-    return CommandResponse(status="success", message="Garage door closed.")
+## Voice Commands
 
-@app.get("/status", response_model=StatusResponse)
-async def get_status(email: str, password: str):
-    authenticate_user(email, password)
-    return StatusResponse(garage_status=fake_db["user"]["garage_status"])
-fastapi
-uvicorn
-services:
-  - type: web
-    name: myq-garage-backend
-    env: python
-    plan: free
-    buildCommand: ""
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
-    envVars: []
-fastapi
-uvicorn
-services:
-  - type: web
-    name: myq-garage-backend
-    env: python
-    plan: free
-    buildCommand: ""
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
-    envVars: []
+- "Open garage door"
+- "Close garage door"
+- "What's the garage door status?"
+
+## Authentication
+
+Default credentials:
+- Email: test@example.com
+- Password: supersecret
