@@ -14,7 +14,7 @@ import {
 import Voice from '@react-native-voice/voice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'https://user:34f5149b9a96cf61546bb41a18af35dd@myq-garage-app-tunnel-91dh3nao.devinapps.com';
+const API_BASE_URL = 'https://myq-garage-app-tunnel-91dh3nao.devinapps.com';
 
 interface Credentials {
   email: string;
