@@ -1,9 +1,13 @@
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Optional
 import asyncio
 
-app = FastAPI()
+app = FastAPI(title="MyQ Garage Door Control", description="Smart garage door control API", version="1.0.0")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 fake_db = {
     "user": {
@@ -48,3 +52,7 @@ async def close_garage(user: dict = Depends(get_current_user)):
 @app.post("/status", response_model=StatusResponse)
 async def get_status(user: dict = Depends(get_current_user)):
     return StatusResponse(garage_status=fake_db["user"]["garage_status"])
+
+@app.get("/")
+async def read_root():
+    return FileResponse('static/index.html')
