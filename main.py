@@ -57,7 +57,7 @@ async def close_garage(request: LoginRequest):
     fake_db["user"]["garage_status"] = "closed"
     return CommandResponse(status="success", message="Garage door closed.")
 
-@app.get("/status", response_model=StatusResponse)
-async def get_status(email: str, password: str):
-    authenticate_user(email, password)
+@app.post("/status", response_model=StatusResponse)
+async def get_status(request: LoginRequest):
+    authenticate_user(request.email, request.password)
     return StatusResponse(garage_status=fake_db["user"]["garage_status"])
