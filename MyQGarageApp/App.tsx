@@ -214,14 +214,13 @@ export default function App() {
 
   const updateGarageStatus = async (creds: Credentials) => {
     try {
-      const params = new URLSearchParams({
-        email: creds.email,
-        password: creds.password,
-      });
-      const response = await fetch(`${API_BASE_URL}/status?${params}`, {
+      const response = await fetch(`${API_BASE_URL}/status`, {
+        method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': PROXY_AUTH,
         },
+        body: JSON.stringify(creds),
       });
       const data = await response.json();
 
