@@ -11,6 +11,9 @@ A mobile app with voice commands and widget controls to open/close a MyQ garage 
 
 ## Backend API
 
+This demo backend stores garage door state in an in-memory dictionary and does
+not communicate with the official MyQ service or any real hardware.
+
 The FastAPI backend provides the following endpoints:
 
 - `POST /login` - Authenticate user
