@@ -18,8 +18,9 @@ The FastAPI backend provides the following endpoints:
 
 - `POST /login` - Authenticate user
 - `POST /open` - Open garage door
-- `POST /close` - Close garage door  
-- `GET /status` - Get current garage door status
+- `POST /close` - Close garage door
+- `POST /status` - Get current garage door status
+  (send JSON `{ "email": ..., "password": ... }`)
 
 ## Setup
 
