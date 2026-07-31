@@ -1,7 +1,6 @@
 import os
 import sys
 
-import pytest
 from fastapi.testclient import TestClient
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -26,7 +25,7 @@ def test_open_and_close_garage():
     assert response.status_code == 200
     assert response.json()["message"] == "Garage door opened."
 
-    status_resp = client.get("/status", params=LOGIN_DATA)
+    status_resp = client.post("/status", json=LOGIN_DATA)
     assert status_resp.status_code == 200
     assert status_resp.json()["garage_status"] == "open"
 
@@ -34,13 +33,12 @@ def test_open_and_close_garage():
     assert response.status_code == 200
     assert response.json()["message"] == "Garage door closed."
 
-    status_resp = client.get("/status", params=LOGIN_DATA)
+    status_resp = client.post("/status", json=LOGIN_DATA)
     assert status_resp.status_code == 200
     assert status_resp.json()["garage_status"] == "closed"
 
 
 def test_retrieve_status():
-    status_resp = client.get("/status", params=LOGIN_DATA)
+    status_resp = client.post("/status", json=LOGIN_DATA)
     assert status_resp.status_code == 200
     assert status_resp.json()["garage_status"] in {"open", "closed"}
-
